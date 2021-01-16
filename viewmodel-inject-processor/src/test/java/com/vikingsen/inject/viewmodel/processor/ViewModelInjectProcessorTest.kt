@@ -23,7 +23,7 @@ class ViewModelInjectProcessorTest {
             package test;
 
             import androidx.lifecycle.ViewModel;
-            import com.squareup.inject.assisted.Assisted;
+            import dagger.assisted.Assisted;
             import com.vikingsen.inject.viewmodel.ViewModelInject;
 
             class TestViewModel extends ViewModel {
@@ -111,7 +111,7 @@ class ViewModelInjectProcessorTest {
             package test;
 
             import androidx.lifecycle.ViewModel;
-            import com.squareup.inject.assisted.Assisted;
+            import dagger.assisted.Assisted;
             import com.vikingsen.inject.viewmodel.ViewModelInject;
 
             class TestViewModel extends ViewModel {
@@ -173,7 +173,7 @@ class ViewModelInjectProcessorTest {
             package test;
 
             import androidx.lifecycle.ViewModel;
-            import com.squareup.inject.assisted.Assisted;
+            import dagger.assisted.Assisted;
             import com.vikingsen.inject.viewmodel.ViewModelInject;
 
             class Outer {
@@ -264,7 +264,7 @@ class ViewModelInjectProcessorTest {
 
             import androidx.lifecycle.SavedStateHandle;
             import androidx.lifecycle.ViewModel;
-            import com.squareup.inject.assisted.Assisted;
+            import dagger.assisted.Assisted;
             import com.vikingsen.inject.viewmodel.ViewModelInject;
 
             class TestViewModel extends ViewModel {
@@ -354,7 +354,7 @@ class ViewModelInjectProcessorTest {
 
             import androidx.lifecycle.SavedStateHandle;
             import androidx.lifecycle.ViewModel;
-            import com.squareup.inject.assisted.Assisted;
+            import dagger.assisted.Assisted;
             import com.vikingsen.inject.viewmodel.ViewModelInject;
 
             class TestViewModel extends ViewModel {
@@ -417,7 +417,7 @@ class ViewModelInjectProcessorTest {
 
             import androidx.lifecycle.SavedStateHandle;
             import androidx.lifecycle.ViewModel;
-            import com.squareup.inject.assisted.Assisted;
+            import dagger.assisted.Assisted;
             import com.vikingsen.inject.viewmodel.ViewModelInject;
 
             class Outer {
@@ -509,7 +509,7 @@ class ViewModelInjectProcessorTest {
 
             import androidx.lifecycle.SavedStateHandle;
             import androidx.lifecycle.ViewModel;
-            import com.squareup.inject.assisted.Assisted;
+            import dagger.assisted.Assisted;
             import com.vikingsen.inject.viewmodel.ViewModelInject;
 
             class TestViewModel extends ViewModel {
@@ -563,7 +563,7 @@ class ViewModelInjectProcessorTest {
 
             import androidx.lifecycle.SavedStateHandle;
             import androidx.lifecycle.ViewModel;
-            import com.squareup.inject.assisted.Assisted;
+            import dagger.assisted.Assisted;
             import com.vikingsen.inject.viewmodel.ViewModelInject;
 
             class TestViewModel extends ViewModel {
@@ -624,7 +624,7 @@ class ViewModelInjectProcessorTest {
 
             import androidx.lifecycle.SavedStateHandle;
             import androidx.lifecycle.ViewModel;
-            import com.squareup.inject.assisted.Assisted;
+            import dagger.assisted.Assisted;
             import com.vikingsen.inject.viewmodel.ViewModelInject;
 
             class BaseViewModel extends ViewModel {}
@@ -680,7 +680,7 @@ class ViewModelInjectProcessorTest {
 
             import androidx.lifecycle.SavedStateHandle;
             import androidx.lifecycle.ViewModel;
-            import com.squareup.inject.assisted.Assisted;
+            import dagger.assisted.Assisted;
             import com.vikingsen.inject.viewmodel.ViewModelInject;
 
             class TestViewModel1 extends ViewModel {
@@ -697,7 +697,7 @@ class ViewModelInjectProcessorTest {
 
             import androidx.lifecycle.SavedStateHandle;
             import androidx.lifecycle.ViewModel;
-            import com.squareup.inject.assisted.Assisted;
+            import dagger.assisted.Assisted;
             import com.vikingsen.inject.viewmodel.ViewModelInject;
 
             class TestViewModel2 extends TestViewModel1 {
@@ -779,7 +779,7 @@ class ViewModelInjectProcessorTest {
 
             import androidx.lifecycle.SavedStateHandle;
             import androidx.lifecycle.ViewModel;
-            import com.squareup.inject.assisted.Assisted;
+            import dagger.assisted.Assisted;
             import com.vikingsen.inject.viewmodel.ViewModelInject;
 
             class TestViewModel extends ViewModel {
@@ -813,7 +813,7 @@ class ViewModelInjectProcessorTest {
             package test;
 
             import androidx.lifecycle.ViewModel;
-            import com.squareup.inject.assisted.Assisted;
+            import dagger.assisted.Assisted;
             import com.vikingsen.inject.viewmodel.ViewModelInject;
 
             class TestViewModel extends ViewModel {
@@ -839,7 +839,7 @@ class ViewModelInjectProcessorTest {
             package test;
 
             import androidx.lifecycle.ViewModel;
-            import com.squareup.inject.assisted.Assisted;
+            import dagger.assisted.Assisted;
             import com.vikingsen.inject.viewmodel.ViewModelInject;
 
             class Outer {
@@ -867,7 +867,7 @@ class ViewModelInjectProcessorTest {
             package test;
 
             import androidx.lifecycle.ViewModel;
-            import com.squareup.inject.assisted.Assisted;
+            import dagger.assisted.Assisted;
             import com.vikingsen.inject.viewmodel.ViewModelInject;
 
             class Outer {
@@ -895,7 +895,7 @@ class ViewModelInjectProcessorTest {
             package test;
 
             import androidx.lifecycle.ViewModel;
-            import com.squareup.inject.assisted.Assisted;
+            import dagger.assisted.Assisted;
             import com.vikingsen.inject.viewmodel.ViewModelInject;
 
             class TestViewModel extends ViewModel {

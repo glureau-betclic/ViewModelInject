@@ -31,7 +31,7 @@ dependencies {
 
     api deps.androidxAnnotations
     implementation deps.inject
-    api deps.assistedInject
+//    api deps.assistedInject
 
     testImplementation deps.kotlin
     testImplementation deps.junit

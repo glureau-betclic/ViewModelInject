@@ -1,21 +1,23 @@
-### Deprecated: Use [Hilt](https://dagger.dev/hilt/) and [Androidx Hilt](https://developer.android.com/training/dependency-injection/hilt-jetpack) ###
+Original library can be found here : https://github.com/hansenji/ViewModelInject
+
+It has been deprecated in favor of Hilt, and was relying on Square AssistedInject.
+Now that Dagger2 released its own AssistedInject packaged in the same compiler, this fork updates the annotations to use Dagger2 compiler instead.
+
+(Not a big fan of Hilt as it adds a lot of "things to know" before to be used, and define lots of components.)
 
 Assisted Injection for Android ViewModels
 =========================================
 
-This library is based on and depends heavily on [Assisted Inject](https://github.com/square/AssistedInject)
-
 ViewModelInject supports [Dagger2](https://google.github.io/dagger/) and [SavedStateHandle](https://developer.android.com/topic/libraries/architecture/viewmodel-savedstate)
 
 #### NOTE 
-This is using alpha versions of the Androidx/JetPack libraries. Use at your own risk.
-
-This Library will go 1.0 when Assisted Inject goes 1.0.
 
 Usage
 -----
 
 #### ViewModel
+
+Nothing fancy, just use Dagger AssistedInjection:
 
 Java
 ```java

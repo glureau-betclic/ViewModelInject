@@ -1,7 +1,7 @@
 package com.vikingsen.inject.viewmodel.processor.internal
 
-import com.squareup.inject.assisted.processor.internal.toClassName
 import com.squareup.javapoet.AnnotationSpec
+import com.squareup.javapoet.ClassName
 import javax.annotation.processing.Processor
 import javax.lang.model.util.Elements
 
@@ -11,12 +11,15 @@ import javax.lang.model.util.Elements
  * [Processor], and a comment pointing to this project's GitHub repo. Returns `null` if no
  * annotation type is available on the classpath.
  */
-fun Processor.createGeneratedAnnotation(elements: Elements, comments: String = "https://github.com/hansenji/ViewModelInject"): AnnotationSpec? {
-  val generatedType = elements.getTypeElement("javax.annotation.processing.Generated")
-      ?: elements.getTypeElement("javax.annotation.Generated")
-      ?: return null
-  return AnnotationSpec.builder(generatedType.toClassName())
-      .addMember("value", "\$S", javaClass.name)
-      .addMember("comments", "\$S", comments)
-      .build()
+fun Processor.createGeneratedAnnotation(
+    elements: Elements,
+    comments: String = "https://github.com/hansenji/ViewModelInject"
+): AnnotationSpec? {
+    val generatedType = elements.getTypeElement("javax.annotation.processing.Generated")
+        ?: elements.getTypeElement("javax.annotation.Generated")
+        ?: return null
+    return AnnotationSpec.builder(ClassName.get(generatedType))
+        .addMember("value", "\$S", javaClass.name)
+        .addMember("comments", "\$S", comments)
+        .build()
 }

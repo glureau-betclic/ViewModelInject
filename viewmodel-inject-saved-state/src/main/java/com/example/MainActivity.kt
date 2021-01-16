@@ -7,9 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.example.inject.Injector
-import com.squareup.inject.assisted.Assisted
 import com.vikingsen.inject.viewmodel.ViewModelInject
 import com.vikingsen.inject.viewmodel.savedstate.SavedStateViewModelFactory
+import dagger.assisted.Assisted
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {

@@ -9,8 +9,9 @@ targetCompatibility = JavaVersion.VERSION_1_8
 
 dependencies {
     implementation project(':viewmodel-inject-annotations')
-    implementation deps.assistedInject
-    implementation deps.assistedInjectProcessor
+//    implementation deps.assistedInject
+//    implementation deps.assistedInjectProcessor
+    implementation deps.dagger
     implementation deps.kotlin
     implementation deps.javaPoet
 

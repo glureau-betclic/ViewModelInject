@@ -1,35 +1,16 @@
 package com.vikingsen.inject.viewmodel.processor
 
 import com.google.auto.service.AutoService
-import com.squareup.inject.assisted.processor.AssistedInjection
-import com.squareup.inject.assisted.processor.Key
-import com.squareup.inject.assisted.processor.NamedKey
-import com.squareup.inject.assisted.processor.asDependencyRequest
-import com.squareup.inject.assisted.processor.internal.MirrorValue
-import com.squareup.inject.assisted.processor.internal.applyEach
-import com.squareup.inject.assisted.processor.internal.cast
-import com.squareup.inject.assisted.processor.internal.castEach
-import com.squareup.inject.assisted.processor.internal.filterNotNullValues
-import com.squareup.inject.assisted.processor.internal.findElementsAnnotatedWith
-import com.squareup.inject.assisted.processor.internal.getAnnotation
-import com.squareup.inject.assisted.processor.internal.getValue
-import com.squareup.inject.assisted.processor.internal.hasAnnotation
-import com.squareup.inject.assisted.processor.internal.toClassName
-import com.squareup.inject.assisted.processor.internal.toTypeName
 import com.squareup.javapoet.ClassName
 import com.squareup.javapoet.JavaFile
 import com.squareup.javapoet.ParameterizedTypeName
 import com.vikingsen.inject.viewmodel.ViewModelInject
 import com.vikingsen.inject.viewmodel.ViewModelModule
 import com.vikingsen.inject.viewmodel.processor.internal.createGeneratedAnnotation
+import com.vikingsen.inject.viewmodel.processor.square.*
 import net.ltgt.gradle.incap.IncrementalAnnotationProcessor
 import net.ltgt.gradle.incap.IncrementalAnnotationProcessorType
-import javax.annotation.processing.AbstractProcessor
-import javax.annotation.processing.Filer
-import javax.annotation.processing.Messager
-import javax.annotation.processing.ProcessingEnvironment
-import javax.annotation.processing.Processor
-import javax.annotation.processing.RoundEnvironment
+import javax.annotation.processing.*
 import javax.lang.model.SourceVersion
 import javax.lang.model.element.Element
 import javax.lang.model.element.ElementKind.CLASS
@@ -116,6 +97,7 @@ class ViewModelInjectProcessor : AbstractProcessor() {
                 // Previous validation guarantees this annotation is present.
                 val moduleAnnotation = userModule.getAnnotation("dagger.Module")
                 // Dagger guarantees this property is present and is an array of types or errors.
+                println(moduleAnnotation?.getValue("includes", elements))
                 val includes = moduleAnnotation?.getValue("includes", elements)
                     ?.cast<MirrorValue.Array>()
                     ?.filterIsInstance<MirrorValue.Type>() ?: emptyList()
@@ -219,14 +201,33 @@ class ViewModelInjectProcessor : AbstractProcessor() {
         val generatedAnnotation = createGeneratedAnnotation(elements)
         return if (assistedKeys.isEmpty()) {
             val factory = ParameterizedTypeName.get(BASIC_FACTORY, targetType)
-            AssistedInjection(targetType, requests, factory, "create", targetType, emptyList(), generatedAnnotation)
+            AssistedInjection(
+                targetType,
+                requests,
+                factory,
+                "create",
+                targetType,
+                emptyList(),
+                generatedAnnotation
+            )
         } else {
             val factory = ParameterizedTypeName.get(SAVED_STATE_FACTORY, targetType)
-            AssistedInjection(targetType, requests, factory, "create", targetType, SAVED_STATE_FACTORY_KEY, generatedAnnotation)
+            AssistedInjection(
+                targetType,
+                requests,
+                factory,
+                "create",
+                targetType,
+                SAVED_STATE_FACTORY_KEY,
+                generatedAnnotation
+            )
         }
     }
 
-    private fun writeViewModelInject(elements: ViewModelInjectElements, injection: AssistedInjection) {
+    private fun writeViewModelInject(
+        elements: ViewModelInjectElements,
+        injection: AssistedInjection
+    ) {
         val generatedTypeSpec = injection.brewJava()
             .toBuilder()
             .addOriginatingElement(elements.targetType)
@@ -306,7 +307,8 @@ class ViewModelInjectProcessor : AbstractProcessor() {
 }
 
 private val BASIC_FACTORY = ClassName.get("com.vikingsen.inject.viewmodel", "ViewModelBasicFactory")
-private val SAVED_STATE_FACTORY = ClassName.get("com.vikingsen.inject.viewmodel.savedstate", "ViewModelSavedStateFactory")
+private val SAVED_STATE_FACTORY =
+    ClassName.get("com.vikingsen.inject.viewmodel.savedstate", "ViewModelSavedStateFactory")
 private val SAVED_STATE_FACTORY_KEY = listOf(
     NamedKey(Key(ClassName.get("androidx.lifecycle", "SavedStateHandle")), "savedStateHandle")
 )
