@@ -8,6 +8,7 @@ import com.vikingsen.inject.viewmodel.ViewModelInject
 import com.vikingsen.inject.viewmodel.ViewModelModule
 import com.vikingsen.inject.viewmodel.processor.internal.createGeneratedAnnotation
 import com.vikingsen.inject.viewmodel.processor.square.*
+import com.vikingsen.inject.viewmodel.processor.square.foo.MirrorValue
 import net.ltgt.gradle.incap.IncrementalAnnotationProcessor
 import net.ltgt.gradle.incap.IncrementalAnnotationProcessorType
 import javax.annotation.processing.*
@@ -97,7 +98,6 @@ class ViewModelInjectProcessor : AbstractProcessor() {
                 // Previous validation guarantees this annotation is present.
                 val moduleAnnotation = userModule.getAnnotation("dagger.Module")
                 // Dagger guarantees this property is present and is an array of types or errors.
-                println(moduleAnnotation?.getValue("includes", elements))
                 val includes = moduleAnnotation?.getValue("includes", elements)
                     ?.cast<MirrorValue.Array>()
                     ?.filterIsInstance<MirrorValue.Type>() ?: emptyList()

@@ -1,6 +1,7 @@
 package com.vikingsen.inject.viewmodel.processor.square
 
 import com.squareup.javapoet.*
+import com.vikingsen.inject.viewmodel.processor.square.foo.MirrorValue
 import dagger.assisted.Assisted
 import javax.annotation.processing.RoundEnvironment
 import javax.lang.model.AnnotatedConstruct
@@ -72,15 +73,6 @@ fun AnnotationMirror.getValue(property: String, elements: Elements) = elements
 
 fun AnnotationValue.toMirrorValue(): MirrorValue = accept(MirrorValueVisitor, null)
 
-sealed class MirrorValue {
-    data class Type(private val value: TypeMirror) : MirrorValue(), TypeMirror by value
-    data class Array(private val value: List<MirrorValue>) : MirrorValue(),
-        List<MirrorValue> by value
-
-    object Unmapped : MirrorValue()
-    object Error : MirrorValue()
-}
-
 private object MirrorValueVisitor : SimpleAnnotationValueVisitor6<MirrorValue, Nothing?>() {
     override fun defaultAction(o: Any, ignored: Nothing?) = MirrorValue.Unmapped
 
@@ -113,56 +105,3 @@ fun AnnotatedConstruct.getAnnotation(qualifiedName: String) = annotationMirrors
     .firstOrNull {
         it.annotationType.asElement().cast<TypeElement>().qualifiedName.contentEquals(qualifiedName)
     }
-
-//https://github.com/square/AssistedInject/blob/418981b158c74e5d9d783f6bb1f386259d0d42a1/assisted-inject-processor/src/main/java/com/squareup/inject/assisted/processor/DependencyRequest.kt
-
-/** Associates a [Key] with its desired use as assisted or not. */
-data class DependencyRequest(
-    val namedKey: NamedKey,
-    /** True when fulfilled by the caller. Otherwise fulfilled by a JSR 330 provider. */
-    val isAssisted: Boolean
-) {
-    val key get() = namedKey.key
-    val name get() = namedKey.name
-
-    override fun toString() = (if (isAssisted) "@Assisted " else "") + "$key $name"
-}
-
-fun VariableElement.asDependencyRequest() =
-    DependencyRequest(asNamedKey(), hasAnnotation<Assisted>())
-
-//https://github.com/square/AssistedInject/blob/418981b158c74e5d9d783f6bb1f386259d0d42a1/assisted-inject-processor/src/main/java/com/squareup/inject/assisted/processor/Key.kt
-
-private val keyComparator = compareBy<Key>({ it.type.toString() }, { it.qualifier == null })
-
-/** Represents a type and an optional qualifier annotation for a binding. */
-data class Key(
-    val type: TypeName,
-    val qualifier: AnnotationSpec? = null
-) : Comparable<Key> {
-    override fun toString() = qualifier?.let { "$it $type" } ?: type.toString()
-    override fun compareTo(other: Key) = keyComparator.compare(this, other)
-}
-
-/** Create a [Key] from this type and any qualifier annotation. */
-fun VariableElement.asKey(mirror: TypeMirror = asType()) = Key(mirror.toTypeName(),
-    annotationMirrors.find {
-        it.annotationType.asElement().hasAnnotation("javax.inject.Qualifier")
-    }?.let { AnnotationSpec.get(it) })
-
-private val namedKeyComparator = compareBy<NamedKey>({ it.key }, { it.name })
-
-// https://github.com/square/AssistedInject/blob/0.5.2/assisted-inject-processor/src/main/java/com/squareup/inject/assisted/processor/NamedKey.kt
-
-/** Represents a [Key] associated with a name. */
-data class NamedKey(
-    val key: Key,
-    val name: String
-) : Comparable<NamedKey> {
-    override fun toString() = "$key $name"
-    override fun compareTo(other: NamedKey) = namedKeyComparator.compare(this, other)
-}
-
-/** Create a [NamedKey] from this type, any qualifier annotation, and the name. */
-fun VariableElement.asNamedKey(mirror: TypeMirror = asType()) =
-    NamedKey(asKey(mirror), simpleName.toString())
